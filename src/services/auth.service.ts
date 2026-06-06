@@ -12,6 +12,12 @@ const USERS: Record<string, UserRecord> = {
   admin:    { password: '123456', role: 'admin',   displayName: 'Administrador' },
 };
 
+export function getNonAdminLogins(): string[] {
+  return Object.entries(USERS)
+    .filter(([, v]) => v.role !== 'admin')
+    .map(([login]) => login);
+}
+
 export function authenticate(login: string, password: string): AuthUser | null {
   const user = USERS[login];
   if (!user || user.password !== password) return null;
