@@ -1,4 +1,5 @@
 export type Rarity = 'comum' | 'rara' | 'lendaria' | 'secreta';
+export type PackType = 'normal' | 'raro';
 export type UserRole = 'usuario' | 'admin';
 
 export interface Sticker {
