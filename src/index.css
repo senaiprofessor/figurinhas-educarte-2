@@ -1,0 +1,319 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sora: 'Sora', sans-serif;
+  --font-inter: 'Inter', sans-serif;
+
+  --color-primary-dark: #1E3A8A;
+  --color-primary: #3B82F6;
+  --color-accent: #F97316;
+  --color-accent-dark: #EA580C;
+
+  --color-rarity-comum: #60A5FA;
+  --color-rarity-rara: #A855F7;
+  --color-rarity-lendaria: #F59E0B;
+  --color-rarity-secreta: #DC2626;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body, #root {
+  height: 100%;
+  min-height: 100%;
+}
+
+body {
+  font-family: var(--font-inter), sans-serif;
+  background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 50%, #1e40af 100%);
+  min-height: 100vh;
+  color: #fff;
+  overflow-x: hidden;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-sora), sans-serif;
+}
+
+/* ─── Page transition ─── */
+.page-enter {
+  animation: pageEnter 0.4s ease forwards;
+}
+
+@keyframes pageEnter {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ─── Glassmorphism ─── */
+.glass {
+  background: rgba(255, 255, 255, 0.07);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 16px;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+/* ─── Gradient orange button ─── */
+.btn-orange {
+  background: linear-gradient(135deg, #F97316, #EA580C);
+  border: none;
+  border-radius: 9999px;
+  color: #fff;
+  font-family: var(--font-sora), sans-serif;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.btn-orange:hover {
+  transform: scale(1.04);
+  box-shadow: 0 0 24px rgba(249, 115, 22, 0.6), 0 8px 20px rgba(0,0,0,0.3);
+}
+
+.btn-orange:active {
+  transform: scale(0.97);
+}
+
+/* ─── Ghost button ─── */
+.btn-ghost {
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.2);
+  border-radius: 9999px;
+  color: #fff;
+  font-family: var(--font-sora), sans-serif;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.2s;
+}
+
+.btn-ghost:hover {
+  background: rgba(255,255,255,0.15);
+  transform: scale(1.02);
+}
+
+/* ─── Floating background orbs ─── */
+.bg-orb {
+  position: fixed;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 0;
+  filter: blur(80px);
+  opacity: 0.25;
+}
+
+.bg-orb-1 { width: 400px; height: 400px; background: #3B82F6; top: -100px; left: -100px; animation: orbFloat1 12s infinite ease-in-out; }
+.bg-orb-2 { width: 300px; height: 300px; background: #1E3A8A; bottom: 10%; right: -80px; animation: orbFloat2 15s infinite ease-in-out; }
+.bg-orb-3 { width: 250px; height: 250px; background: #F97316; top: 40%; left: 30%; animation: orbFloat3 18s infinite ease-in-out; }
+
+@keyframes orbFloat1 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50%       { transform: translate(40px, 60px) scale(1.1); }
+}
+@keyframes orbFloat2 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50%       { transform: translate(-50px, -40px) scale(0.9); }
+}
+@keyframes orbFloat3 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33%       { transform: translate(30px, -50px) scale(1.05); }
+  66%       { transform: translate(-30px, 30px) scale(0.95); }
+}
+
+/* ─── Sticker card rarity effects ─── */
+.card-comum {
+  box-shadow: 0 0 0 2px #60A5FA, 0 4px 20px rgba(0,0,0,0.4);
+}
+
+.card-rara {
+  box-shadow: 0 0 0 2px #A855F7, 0 0 20px rgba(168,85,247,0.4), 0 4px 20px rgba(0,0,0,0.4);
+  animation: raraPulse 2.5s infinite ease-in-out;
+}
+
+.card-lendaria {
+  box-shadow: 0 0 0 2px #F59E0B, 0 0 30px rgba(245,158,11,0.5), 0 4px 20px rgba(0,0,0,0.4);
+  animation: lendariaPulse 2s infinite ease-in-out, floatAnim 3s infinite ease-in-out;
+}
+
+.card-secreta {
+  box-shadow: 0 0 0 2px #DC2626, 0 0 30px rgba(220,38,38,0.5), 0 4px 20px rgba(0,0,0,0.4);
+  position: relative;
+  overflow: hidden;
+}
+
+.card-secreta::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, transparent 0%, rgba(220,38,38,0.15) 50%, transparent 100%);
+  background-size: 200% 100%;
+  animation: shimmer 2.5s infinite linear;
+  border-radius: inherit;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.card-secreta::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 20% 80%, rgba(220,38,38,0.1) 0%, transparent 50%),
+              radial-gradient(circle at 80% 20%, rgba(220,38,38,0.1) 0%, transparent 50%);
+  border-radius: inherit;
+  z-index: 0;
+  pointer-events: none;
+}
+
+@keyframes raraPulse {
+  0%, 100% { box-shadow: 0 0 0 2px #A855F7, 0 0 20px rgba(168,85,247,0.4), 0 4px 20px rgba(0,0,0,0.4); }
+  50%       { box-shadow: 0 0 0 2px #A855F7, 0 0 35px rgba(168,85,247,0.7), 0 4px 20px rgba(0,0,0,0.4); }
+}
+
+@keyframes lendariaPulse {
+  0%, 100% { box-shadow: 0 0 0 2px #F59E0B, 0 0 30px rgba(245,158,11,0.5), 0 4px 20px rgba(0,0,0,0.4); }
+  50%       { box-shadow: 0 0 0 3px #F59E0B, 0 0 50px rgba(245,158,11,0.8), 0 4px 30px rgba(0,0,0,0.4); }
+}
+
+@keyframes floatAnim {
+  0%, 100% { transform: translateY(0); }
+  50%       { transform: translateY(-8px); }
+}
+
+@keyframes shimmer {
+  0%   { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+/* ─── Pack opening animations ─── */
+@keyframes shake {
+  0%   { transform: rotate(0deg) scale(1); }
+  10%  { transform: rotate(-6deg) scale(1.05); }
+  20%  { transform: rotate(6deg) scale(1.05); }
+  30%  { transform: rotate(-6deg) scale(1.08); }
+  40%  { transform: rotate(6deg) scale(1.08); }
+  50%  { transform: rotate(-8deg) scale(1.1); }
+  60%  { transform: rotate(8deg) scale(1.1); }
+  70%  { transform: rotate(-8deg) scale(1.08); }
+  80%  { transform: rotate(8deg) scale(1.05); }
+  90%  { transform: rotate(-4deg) scale(1.02); }
+  100% { transform: rotate(0deg) scale(1); }
+}
+
+.envelope-shake {
+  animation: shake 0.6s ease-in-out 2;
+}
+
+@keyframes envelopePulse {
+  0%, 100% { transform: scale(1); box-shadow: 0 0 30px rgba(249,115,22,0.4); }
+  50%       { transform: scale(1.03); box-shadow: 0 0 60px rgba(249,115,22,0.7); }
+}
+
+.envelope-pulse {
+  animation: envelopePulse 2s infinite ease-in-out;
+}
+
+/* ─── Card flip 3D ─── */
+.flip-container {
+  perspective: 1200px;
+}
+
+.flip-card {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  transform-style: preserve-3d;
+  transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.flip-card.is-flipped {
+  transform: rotateY(180deg);
+}
+
+.flip-card-front,
+.flip-card-back {
+  position: absolute;
+  inset: 0;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  border-radius: 16px;
+}
+
+.flip-card-back {
+  transform: rotateY(180deg);
+}
+
+/* ─── Firework particles ─── */
+.firework-particle {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  animation: flyOut 0.8s ease-out forwards;
+}
+
+@keyframes flyOut {
+  0%   { transform: translate(0,0) scale(1); opacity: 1; }
+  100% { opacity: 0; }
+}
+
+/* ─── Rarity badge ─── */
+.rarity-badge {
+  font-family: var(--font-sora), sans-serif;
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 2px 8px;
+  border-radius: 9999px;
+}
+
+/* ─── Modal backdrop ─── */
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.6);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: fadeIn 0.2s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+.modal-content {
+  animation: modalSlideIn 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes modalSlideIn {
+  from { transform: scale(0.85) translateY(20px); opacity: 0; }
+  to   { transform: scale(1) translateY(0); opacity: 1; }
+}
+
+/* ─── Scrollbar ─── */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: rgba(255,255,255,0.05); }
+::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.2); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.35); }
+
+/* ─── Bar chart ─── */
+.bar-fill {
+  transition: width 1s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ─── Responsive helpers ─── */
+@media (max-width: 767px) {
+  .hide-mobile { display: none !important; }
+}
+
+@media (min-width: 768px) {
+  .hide-desktop { display: none !important; }
+}
